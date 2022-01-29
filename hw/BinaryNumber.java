@@ -149,7 +149,11 @@ public class BinaryNumber {
 	}
 	
 	public String toString(){
-		return java.util.Arrays.toString(this.getInnerArray());
+		String out = "";
+		for(int i:this.getInnerArray()){
+			out = out.concat(Integer.toString(i));
+		}
+		return out;
 	}
 
 	public static void main(String[] args) {

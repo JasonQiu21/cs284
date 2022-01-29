@@ -2,9 +2,11 @@ import Java.util.Arrays;
 
 public class BinaryNumber {
 	private int[] bin;
+	private int length;
 	
 	//creates  a  binary  number  of  length "length" and consisting only of zeros
 	public BinaryNumber(int length){
+		this.length = length;
 		bin = new int[length];
 		if(length <= 0){
 			throw new IllegalArgumentException("length must be >= 0.");
@@ -14,6 +16,7 @@ public class BinaryNumber {
 	//creates  a  binary  number  using a string
 	public BinaryNumber(String str){
 		bin = new int[str.length()];
+		this.length = str.length();
 		for(int i = 0; i < str.length(); i++){
 			if(str.charAt(i) == "1".charAt(0)){
 				bin[i] = 1;
@@ -27,7 +30,7 @@ public class BinaryNumber {
 	
 	//returns the length of a binary
 	public int getLength(){
-		return this.bin.length;
+		return this.length;
 	}
 	
 	//returns the integer array representing a binary number
@@ -37,7 +40,11 @@ public class BinaryNumber {
 	
 	//returns a digit of a binary number given an index.
 	public int getDigit(int index){
-		return this.bin[index];
+		try{
+			return this.bin[index];
+		} catch (IndexOutOfBoundsException e){
+			throw new IndexOutOfBoundsException("Index out of bounds.");
+		}
 	}
 	
 	//returns a binary number in its decimal notation
@@ -102,8 +109,43 @@ public class BinaryNumber {
 		}
 		return out;
 	}
-	
 	public void add (BinaryNumber aBinaryNumber){
+		int carry = 0;
+		int[] a = this.getInnerArray();
+		int[] b = aBinaryNumber.getInnerArray();
+		int digit;
+		int[] temp;
+		
+		//Eqaulize different length binary nums
+		int diff = this.getLength() - aBinaryNumber.getLength();
+		if(diff != 0){
+			if(this.getLength() > aBinaryNumber.getLength()){
+				temp = new int[a.length+diff];
+				for (int i = 0; i < a.length; i++) {
+					temp[i+diff] = a[i];
+				}
+				a = temp;
+			} else {
+				temp = new int[b.length+diff];
+				for (int i = 0; i < b.length; i++) {
+					temp[i+diff] = b[i];
+				}
+				b = temp;
+			}
+		}
+		for(int i=a.length-1; i>0; i--){
+			int digitSum = a[i] + b[i] + carry;
+			if(digitSum > 1){carry = 1;}
+			if(digitSum == 1 || digitSum == 3){digit = 1;} else {digit = 0;}
+			a[i] = digit;
+		}
+		if(carry == 1){				
+			temp = new int[a.length + 1];
+			for (int i = 0; i < b.length; i++) {
+				temp[i+1] = a[i];
+			}
+			temp[0] = 1;
+			this.bin = temp;}
 	}
 	
 	public String toString(){
@@ -119,6 +161,8 @@ public class BinaryNumber {
 		System.out.println(a.toDecimal());
 		System.out.println(java.util.Arrays.toString(bwor(a, b)));
 		System.out.println(java.util.Arrays.toString(bwand(a, b)));
+		a.add(b);
+		System.out.println(a.toString());
 		a.bitShift(-1, 1);
 		System.out.println(a.toString());
 	}

@@ -1,9 +1,6 @@
 // I pledge my honor that I have abided by the Stevens Honor System.
 // Jason Qiu
 // 2021-02-07
-
-import Java.util.Arrays; // Used for testing; not used in the class itself.
-
 public class BinaryNumber {
 	private int[] bin;
 	private int length;
@@ -113,6 +110,14 @@ public class BinaryNumber {
 		}
 		return out;
 	}
+	static int[] prependZero(int amount, int[] x){
+		// Prepends amount of 0s to an int array
+		int[] p = new int[amount];
+		int[] out = new int[amount + x.length];
+		System.arraycopy(p, 0, out, 0, p.length);
+		System.arraycopy(x, 0, out, p.length, x.length);
+		return out;
+	}
 	public void add (BinaryNumber aBinaryNumber){
 		int carry = 0;
 		int[] a = this.getInnerArray();
@@ -121,25 +126,17 @@ public class BinaryNumber {
 		int[] temp;
 		
 		//Eqaulize different length binary nums
-		int diff = this.getLength() - aBinaryNumber.getLength();
+		int diff = Math.abs(this.getLength() - aBinaryNumber.getLength());
 		if(diff != 0){
-			if(this.getLength() > aBinaryNumber.getLength()){
-				temp = new int[a.length+diff];
-				for (int i = 0; i < a.length; i++) {
-					temp[i+diff] = a[i];
-				}
-				a = temp;
+			if(a.length < b.length){
+				a = prependZero(diff, a);
 			} else {
-				temp = new int[b.length+diff];
-				for (int i = 0; i < b.length; i++) {
-					temp[i+diff] = b[i];
-				}
-				b = temp;
+				b = prependZero(diff, b);
 			}
 		}
-		for(int i=a.length-1; i>0; i--){
+		for(int i=a.length-1; i>=0; i--){
 			int digitSum = a[i] + b[i] + carry;
-			if(digitSum > 1){carry = 1;}
+			if(digitSum > 1){carry = 1;} else {carry = 0;}
 			if(digitSum == 1 || digitSum == 3){digit = 1;} else {digit = 0;}
 			a[i] = digit;
 		}
@@ -149,7 +146,8 @@ public class BinaryNumber {
 				temp[i+1] = a[i];
 			}
 			temp[0] = 1;
-			this.bin = temp;}
+			this.bin = temp;
+		} else {this.bin = a;}
 	}
 	
 	public String toString(){
@@ -162,16 +160,17 @@ public class BinaryNumber {
 
 	public static void main(String[] args) {
 		BinaryNumber a = new BinaryNumber("1101");
-		BinaryNumber b = new BinaryNumber("1011");
-		System.out.println(a.getLength());
-		System.out.println(a.getDigit(2));
-		System.out.println(a.getInnerArray()[0]);
-		System.out.println(a.toDecimal());
-		System.out.println(java.util.Arrays.toString(bwor(a, b)));
-		System.out.println(java.util.Arrays.toString(bwand(a, b)));
+		BinaryNumber b = new BinaryNumber("101100");
+		// System.out.println(a.getLength());
+		// System.out.println(a.getDigit(2));
+		// System.out.println(a.getInnerArray()[0]);
+		// System.out.println(a.toDecimal());
+		// System.out.println(java.util.Arrays.toString(bwor(a, b)));
+		// System.out.println(java.util.Arrays.toString(bwand(a, b)));
+		// System.out.println(java.util.Arrays.toString(prependZero(2, a.getInnerArray())));
 		a.add(b);
 		System.out.println(a.toString());
-		a.bitShift(-1, 1);
-		System.out.println(a.toString());
+		// a.bitShift(-1, 1);
+		// System.out.println(a.toString());
 	}
 }

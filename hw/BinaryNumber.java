@@ -1,4 +1,8 @@
-import Java.util.Arrays;
+// I pledge my honor that I have abided by the Stevens Honor System.
+// Jason Qiu
+// 2021-02-07
+
+import Java.util.Arrays; // Used for testing; not used in the class itself.
 
 public class BinaryNumber {
 	private int[] bin;

@@ -147,7 +147,11 @@ public class BinaryNumber {
 			}
 			temp[0] = 1;
 			this.bin = temp;
-		} else {this.bin = a;}
+			this.length = temp.length;
+		} else {
+			this.bin = a; 
+			this.length = a.length;
+		}
 	}
 	
 	public String toString(){
@@ -159,8 +163,8 @@ public class BinaryNumber {
 	}
 
 	public static void main(String[] args) {
-		BinaryNumber a = new BinaryNumber("1101");
-		BinaryNumber b = new BinaryNumber("101100");
+		BinaryNumber a = new BinaryNumber("10110");
+		BinaryNumber b = new BinaryNumber("11101");
 		// System.out.println(a.getLength());
 		// System.out.println(a.getDigit(2));
 		// System.out.println(a.getInnerArray()[0]);

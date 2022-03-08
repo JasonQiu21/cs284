@@ -219,7 +219,7 @@ public class IDLList<E> {
 	public boolean remove(E elem) {
 		Node pointer = this.head;
 		if(this.head == null){return false;}
-		while(this.head.next != null){
+		while(pointer.next != null){
 			if(pointer.data == elem){
 				try{
 					pointer.next.prev = pointer.prev;
@@ -268,7 +268,7 @@ public class IDLList<E> {
         al10[6] = "G";
 		IDLList<String> L102 = new IDLList<String>(al10);
 		System.out.println(L102.remove("D"));
-		System.out.println(L102.remove("A"));
+		System.out.println(L102.remove("H"));
 		System.out.println(L102.toString());
 		
 	}

@@ -30,6 +30,13 @@ class Node<E> {
 public class IsoTriangle {
 	Integer total_iso_triangle = 0;
 	//method to count the total number of Type-2 and Type-3 triangles in a binary tree
+
+	/*
+	1. Parent has to pass number of left/right steps down the tree from root
+	2. Child has to pass number of left/right steps down to tree to leaves
+	3. Terminal case: node has 0 left/right below
+	4. Update solution by taking max of left steps above and right steps below and vice versa
+	*/
 	public Pair<Integer> helper(Node root, int upLeftCount, int upRightCount){
 		int leftCount;
 		int rightCount;

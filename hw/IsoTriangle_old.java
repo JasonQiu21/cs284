@@ -1,5 +1,4 @@
-import java.util.function.LongToDoubleFunction;
-
+// Assignment was updated in order to prevent accessing a node's left/right more than once. See IsoTriangle.java for the new version.
 
 class Pair<E>{
 	E value1;
@@ -12,10 +11,8 @@ class Pair<E>{
 }
 class Node<E> {
 	E data;
-	private Node<E> left, right;
+	Node<E> left, right;
 	Integer depth;
-	public Integer left_visit_count = 0;
-	public Integer right_visit_count = 0;
 
 	public Node(E data) {
 		this.data = data;
@@ -31,22 +28,11 @@ class Node<E> {
 		this.depth = depth;
 	}
 
-	public Node<E> getLeft(){
-		this.left_visit_count += 1;
-		return this.left;
-	}
-
-	public Node<E> getRight(){
-		this.right_visit_count += 1;
-		return this.right;
-	}
-
-	public String toString(){
-		return this.data.toString();
-	}
 }
 public class IsoTriangle {
 	Integer total_iso_triangle = 0;
+	//method to count the total number of Type-2 and Type-3 triangles in a binary tree
+
 	/*
 	1. Parent has to pass number of left/right steps down the tree from root
 	2. Child has to pass number of left/right steps down to tree to leaves
@@ -56,17 +42,20 @@ public class IsoTriangle {
 	public Pair<Integer> helper(Node root, int upLeftCount, int upRightCount){
 		int leftCount;
 		int rightCount;
-		if(root == null){
-			if(upLeftCount == 0){rightCount = -1;} else {rightCount = 0;}
-			if(upRightCount == 0){leftCount = -1;} else {leftCount = 0;}
+		if(root.left == null){
+			leftCount = 0;
 		} else {
-			leftCount = helper(root.getLeft(), upLeftCount + 1, 0).value1 + 1;
-			rightCount = helper(root.getRight(), 0, upRightCount + 1).value2 + 1;
+			leftCount = helper(root.left, upLeftCount + 1, 0).value1 + 1;
 		}
-		total_iso_triangle += Math.max(Math.min(upRightCount, leftCount), 0);
-		total_iso_triangle += Math.max(Math.min(upLeftCount, rightCount), 0);
+		if(root.right == null){
+			rightCount = 0;
+		} else {
+			rightCount = helper(root.right, 0, upRightCount +1).value2 + 1;
+		}
+		total_iso_triangle += Math.min(upRightCount, leftCount);
+		total_iso_triangle += Math.min(upLeftCount, rightCount);
 		Pair<Integer> out = new Pair(leftCount, rightCount);
-		return out;	
+		return out;
 	}
 
 

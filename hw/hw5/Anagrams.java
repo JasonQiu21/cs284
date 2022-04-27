@@ -103,7 +103,6 @@ public class Anagrams {
 		final long estimatedTime = System.nanoTime() - startTime;
 		final double seconds = ((double) estimatedTime / 1000000000);
 		System.out.println("Elapsed Time: " + seconds);
-		System.out.println(a.letterTable.toString());
 		System.out.println("Key of max anagrams: " + maxEntries.get(0).getKey());
 		System.out.println("List of max anagrams: " + maxEntries.get(0).getValue());
 		System.out.println("Length of list of max anagrams: " + maxEntries.get(0).getValue().size());

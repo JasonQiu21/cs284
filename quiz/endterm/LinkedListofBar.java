@@ -115,7 +115,7 @@ public class LinkedListofBar {
 		Bar node = (secondTallestIdx > tallestIdx) ? tallestNode : secondTallestNode;
 		Bar end = (node == tallestNode) ? secondTallestNode : tallestNode;
 		node = node.next;
-		while(node.next != end.next){
+		while(node != end){
 			if(node.type == "stone"){
 				tw += secondHeight - node.height;
 			} else if(node.type == "salt"){

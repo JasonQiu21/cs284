@@ -44,7 +44,7 @@ public class ConcatNumbers {
 			int y = i - '0';
 			x += y;
 		}
-		return (x%3 == 0) ? true : false;
+		return x%3 == 0;
 	}
 
 	
